@@ -28,12 +28,13 @@ func LoginHandler(w http.ResponseWriter, r *http.Request) {
 	}{}
 
 	w.Header().Set("Content-Type", "application/json")
-	w.WriteHeader(http.StatusOK)
 
 	switch form.Password {
 	case "a":
 		res.User.UserID = "1316190124"
 		res.User.Entered = false
+		w.WriteHeader(http.StatusOK)
+
 		if err := json.NewEncoder(w).Encode(&res); err != nil {
 			w.WriteHeader(http.StatusInternalServerError)
 			log.Println(err)
@@ -45,6 +46,8 @@ func LoginHandler(w http.ResponseWriter, r *http.Request) {
 	case "b":
 		res.User.UserID = "1316190123"
 		res.User.Entered = true
+		w.WriteHeader(http.StatusOK)
+
 		if err := json.NewEncoder(w).Encode(&res); err != nil {
 			w.WriteHeader(http.StatusInternalServerError)
 			log.Println(err)
@@ -54,7 +57,7 @@ func LoginHandler(w http.ResponseWriter, r *http.Request) {
 		return
 
 	default:
-		w.WriteHeader(http.StatusInternalServerError)
+		w.WriteHeader(http.StatusUnauthorized)
 		fmt.Fprintf(w, "ng")
 	}
 }
@@ -67,6 +70,7 @@ func LogoutHandler(w http.ResponseWriter, r *http.Request) {
 func main() {
 	http.HandleFunc("/auth/login", LoginHandler)
 	http.HandleFunc("/auth/logout", LogoutHandler)
+	http.HandleFunc("/lab/save", SaveHandler)
 
 	http.ListenAndServe(":8080", nil)
 }
