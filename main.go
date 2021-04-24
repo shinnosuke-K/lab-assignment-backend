@@ -6,6 +6,9 @@ import (
 	"io"
 	"log"
 	"net/http"
+	"os"
+
+	"github.com/shinnosuke-K/lab-assignment-backend/db"
 )
 
 func LoginHandler(w http.ResponseWriter, r *http.Request) {
@@ -108,10 +111,29 @@ func SaveHandler(w http.ResponseWriter, r *http.Request) {
 	return
 }
 
+func InsertLabsHandler(w http.ResponseWriter, r *http.Request) {
+	DB, err := db.Open()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, err.Error())
+		os.Exit(1)
+	}
+
+	if err := db.InsertLabs(DB); err != nil {
+		fmt.Fprintf(os.Stderr, err.Error())
+	}
+}
+
+func InsertStudentsHandler(w http.ResponseWriter, r *http.Request) {
+
+}
+
 func main() {
+
 	http.HandleFunc("/auth/login", LoginHandler)
 	http.HandleFunc("/auth/logout", LogoutHandler)
 	http.HandleFunc("/lab/save", SaveHandler)
+
+	http.HandleFunc("/insert", InsertLabsHandler)
 
 	http.ListenAndServe(":8080", nil)
 }
