@@ -6,7 +6,9 @@ services:
     ports:
     - "3306:3306"
     volumes:
-    - ./docker/mysql/:/docker-entrypoint-initdb.d
+      - ./docker/mysql/my.cnf:/etc/mysql/conf.d/my.cnf
+      - ./docker/mysql/sql:/docker-entrypoint-initdb.d
+      - ./docker/mysql/data:/var/lib/mysql
     environment:
       MYSQL_ALLOW_EMPTY_PASSWORD: "yes"
       MYSQL_DATABASE: "questionnaire"
