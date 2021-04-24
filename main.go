@@ -11,8 +11,8 @@ import (
 func LoginHandler(w http.ResponseWriter, r *http.Request) {
 	log.Println("Login")
 	var form struct {
-		UserId   string `json:"user_id"`
-		Password string `json:"password"`
+		StudentNum string `json:"student_num"`
+		Password   string `json:"password"`
 	}
 
 	if err := json.NewDecoder(r.Body).Decode(&form); err != nil {
