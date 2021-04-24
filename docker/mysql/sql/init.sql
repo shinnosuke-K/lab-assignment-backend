@@ -1,4 +1,4 @@
-use questionnaire
+use questionnaire;
 
 create table if not exists students (
     user_id varchar(255) not null,
