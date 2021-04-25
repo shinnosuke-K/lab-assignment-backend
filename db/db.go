@@ -2,7 +2,11 @@ package db
 
 import (
 	"encoding/csv"
+	"fmt"
 	"os"
+	"strconv"
+
+	"golang.org/x/crypto/bcrypt"
 
 	"github.com/google/uuid"
 
@@ -10,28 +14,32 @@ import (
 	"gorm.io/gorm"
 )
 
-func Open() (*gorm.DB, error) {
-	dsn := "root:@tcp(lab-db:3306)/questionnaire?charset=utf8mb4&parseTime=True&loc=Local"
+func Open() *gorm.DB {
+	//dsn := "root:@tcp(lab-db:3306)/questionnaire?charset=utf8mb4&parseTime=True&loc=Local"
+	dsn := "root:@tcp(localhost:3306)/questionnaire?charset=utf8mb4&parseTime=True&loc=Local"
 	db, err := gorm.Open(mysql.Open(dsn), &gorm.Config{})
 
 	if err != nil {
-		return nil, err
+		fmt.Fprintln(os.Stderr, err.Error())
+		os.Exit(1)
 	}
 
 	sqlDB, err := db.DB()
 	if err != nil {
-		return nil, err
+		fmt.Fprintln(os.Stderr, err.Error())
+		os.Exit(1)
 	}
 
 	if err := sqlDB.Ping(); err != nil {
-		return nil, err
+		fmt.Fprintln(os.Stderr, err.Error())
+		os.Exit(1)
 	}
 
-	return db, nil
+	return db
 }
 
 func InsertLabs(db *gorm.DB) error {
-	file, err := os.Open("list.csv")
+	file, err := os.Open("lab.csv")
 	if err != nil {
 		return err
 	}
@@ -41,11 +49,6 @@ func InsertLabs(db *gorm.DB) error {
 	if err != nil {
 		return err
 	}
-
-	//id varchar(255) not null ,
-	//	lab_name varchar(255),
-	//	prof_name varchar(255),
-	//	prof_roman varchar(255),
 
 	type Lab struct {
 		ID        string

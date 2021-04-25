@@ -92,12 +92,6 @@ func SaveHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	//if err := json.NewDecoder(r.Body).Decode(&req); err != nil {
-	//	w.WriteHeader(http.StatusInternalServerError)
-	//	log.Println(err)
-	//	return
-	//}
-
 	log.Println(req)
 
 	type Response struct {
@@ -111,12 +105,9 @@ func SaveHandler(w http.ResponseWriter, r *http.Request) {
 	return
 }
 
+var DB = db.Open()
+
 func InsertLabsHandler(w http.ResponseWriter, r *http.Request) {
-	DB, err := db.Open()
-	if err != nil {
-		fmt.Fprintf(os.Stderr, err.Error())
-		os.Exit(1)
-	}
 
 	if err := db.InsertLabs(DB); err != nil {
 		fmt.Fprintf(os.Stderr, err.Error())
@@ -140,5 +131,8 @@ func main() {
 	http.HandleFunc("/lab", InsertLabsHandler)
 	http.HandleFunc("/student", InsertStudentsHandler)
 
-	http.ListenAndServe(":8080", nil)
+	if err := http.ListenAndServe(":8080", nil); err != nil {
+		fmt.Fprintln(os.Stderr, err.Error())
+		os.Exit(1)
+	}
 }
