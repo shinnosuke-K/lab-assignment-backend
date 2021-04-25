@@ -6,5 +6,6 @@ RUN CGO_ENABLED=0 GOOS=linux go build -o server .
 FROM busybox:latest
 WORKDIR /
 COPY --from=builder ./server /
-COPY ./list.csv /
+COPY lab.csv /
+COPY student.csv /
 CMD ["./server"]

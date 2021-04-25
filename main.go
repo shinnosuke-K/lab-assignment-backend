@@ -125,6 +125,10 @@ func InsertLabsHandler(w http.ResponseWriter, r *http.Request) {
 
 func InsertStudentsHandler(w http.ResponseWriter, r *http.Request) {
 
+	if err := db.InsertStudent(DB); err != nil {
+		fmt.Fprintf(os.Stderr, err.Error())
+		os.Exit(1)
+	}
 }
 
 func main() {
@@ -133,7 +137,8 @@ func main() {
 	http.HandleFunc("/auth/logout", LogoutHandler)
 	http.HandleFunc("/lab/save", SaveHandler)
 
-	http.HandleFunc("/insert", InsertLabsHandler)
+	http.HandleFunc("/lab", InsertLabsHandler)
+	http.HandleFunc("/student", InsertStudentsHandler)
 
 	http.ListenAndServe(":8080", nil)
 }
