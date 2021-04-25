@@ -50,7 +50,7 @@ func InsertLabs(db *gorm.DB) error {
 		return err
 	}
 
-	type Lab struct {
+	type Prof struct {
 		ID        string
 		LabName   string
 		ProfName  string
@@ -59,7 +59,7 @@ func InsertLabs(db *gorm.DB) error {
 
 	for _, r := range records {
 
-		prof := Lab{
+		prof := Prof{
 			ID:        uuid.New().String(),
 			LabName:   r[0],
 			ProfName:  r[1],
@@ -85,8 +85,8 @@ func InsertStudent(db *gorm.DB) error {
 		return err
 	}
 
-	type Student struct {
-		UserID     string
+	type User struct {
+		ID         string
 		StudentNum int64
 		Password   string
 		Entered    bool
@@ -109,8 +109,8 @@ func InsertStudent(db *gorm.DB) error {
 			return err
 		}
 
-		student := Student{
-			UserID:     uuid.NewString(),
+		student := User{
+			ID:         uuid.NewString(),
 			StudentNum: num,
 			Password:   string(hash),
 			Entered:    entered,

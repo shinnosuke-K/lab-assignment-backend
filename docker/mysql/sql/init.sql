@@ -1,15 +1,15 @@
 use questionnaire;
 
-create table if not exists students (
-    user_id varchar(255) not null,
+create table if not exists users (
+    id varchar(255) not null,
     student_num bigint,
     password varchar(255),
     graduate bool,
     entered bool,
-    PRIMARY KEY (user_id)
+    PRIMARY KEY (id)
 );
 
-create table if not exists  labs (
+create table if not exists  professors (
     id varchar(255) not null ,
     lab_name varchar(255),
     prof_name varchar(255),
@@ -25,5 +25,5 @@ create table if not exists answers (
     reg_at datetime,
     update_at datetime,
     PRIMARY KEY (id, user_id),
-    FOREIGN KEY (user_id) REFERENCES students(user_id)
+    FOREIGN KEY (user_id) REFERENCES users(id)
 )
