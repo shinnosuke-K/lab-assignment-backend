@@ -2,7 +2,7 @@ use questionnaire;
 
 create table if not exists students (
     user_id varchar(255) not null,
-    student_num int,
+    student_num bigint,
     password varchar(255),
     entered bool,
     PRIMARY KEY (user_id)
