@@ -126,10 +126,19 @@ func main() {
 
 	http.HandleFunc("/auth/login", LoginHandler)
 	http.HandleFunc("/auth/logout", LogoutHandler)
-	http.HandleFunc("/lab/save", SaveHandler)
 
-	http.HandleFunc("/lab", InsertLabsHandler)
-	http.HandleFunc("/student", InsertStudentsHandler)
+	//http.HandleFunc("/auth/lab/save", SaveHandler)
+	//http.HandleFunc("/auth/graduate/save", SaveHandler)
+
+	//http.HandleFunc("/auth/lab/fix", SaveHandler)
+	//http.HandleFunc("/auth/graduate/fix", SaveHandler)
+
+	// /auth/user/save/all
+	// /auth/user/fix/graduate
+	// /auth/user/fix/lab
+
+	http.HandleFunc("/prof", InsertLabsHandler)
+	http.HandleFunc("/user", InsertUsersHandler)
 
 	if err := http.ListenAndServe(":8080", nil); err != nil {
 		fmt.Fprintln(os.Stderr, err.Error())
