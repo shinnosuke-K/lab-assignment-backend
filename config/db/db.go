@@ -72,7 +72,7 @@ func InsertLabs(db *gorm.DB) error {
 	return nil
 }
 
-func InsertStudent(db *gorm.DB) error {
+func InsertUsers(db *gorm.DB) error {
 	file, err := os.Open("student.csv")
 	if err != nil {
 		return err

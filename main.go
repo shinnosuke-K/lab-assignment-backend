@@ -114,9 +114,9 @@ func InsertLabsHandler(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
-func InsertStudentsHandler(w http.ResponseWriter, r *http.Request) {
+func InsertUsersHandler(w http.ResponseWriter, r *http.Request) {
 
-	if err := db.InsertStudent(DB); err != nil {
+	if err := db.InsertUsers(DB); err != nil {
 		fmt.Fprintf(os.Stderr, err.Error())
 		os.Exit(1)
 	}
