@@ -1,12 +1,11 @@
 package db
 
 import (
+	"crypto/sha256"
 	"encoding/csv"
 	"fmt"
 	"os"
 	"strconv"
-
-	"golang.org/x/crypto/bcrypt"
 
 	"github.com/google/uuid"
 
@@ -89,6 +88,7 @@ func InsertStudent(db *gorm.DB) error {
 		ID         string
 		StudentNum int64
 		Password   string
+		Graduate   bool
 		Entered    bool
 	}
 
@@ -99,12 +99,16 @@ func InsertStudent(db *gorm.DB) error {
 			return err
 		}
 
-		hash, err := bcrypt.GenerateFromPassword([]byte(r[1]), bcrypt.DefaultCost)
+		h := sha256.New()
+		h.Write([]byte(r[1]))
+		hashedPass := fmt.Sprintf("%x", h.Sum(nil))
+
+		graduate, err := strconv.ParseBool(r[2])
 		if err != nil {
 			return err
 		}
 
-		entered, err := strconv.ParseBool(r[2])
+		entered, err := strconv.ParseBool(r[3])
 		if err != nil {
 			return err
 		}
@@ -112,7 +116,8 @@ func InsertStudent(db *gorm.DB) error {
 		student := User{
 			ID:         uuid.NewString(),
 			StudentNum: num,
-			Password:   string(hash),
+			Password:   hashedPass,
+			Graduate:   graduate,
 			Entered:    entered,
 		}
 
