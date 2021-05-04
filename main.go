@@ -8,7 +8,7 @@ import (
 	"net/http"
 	"os"
 
-	"github.com/shinnosuke-K/lab-assignment-backend/db"
+	"github.com/shinnosuke-K/lab-assignment-backend/config/db"
 )
 
 func LoginHandler(w http.ResponseWriter, r *http.Request) {
