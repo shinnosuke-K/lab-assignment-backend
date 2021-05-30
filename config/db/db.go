@@ -7,41 +7,38 @@ import (
 	"os"
 	"strconv"
 
-	"github.com/google/uuid"
+	_ "github.com/go-sql-driver/mysql"
+	"github.com/jmoiron/sqlx"
 
-	"gorm.io/driver/mysql"
-	"gorm.io/gorm"
+	"github.com/google/uuid"
 )
 
-func Open() *gorm.DB {
+var Driver *sqlx.DB
+
+func Open() {
 	//dsn := "root:@tcp(lab-db:3306)/questionnaire?charset=utf8mb4&parseTime=True&loc=Local"
 	dsn := "root:@tcp(localhost:3306)/questionnaire?charset=utf8mb4&parseTime=True&loc=Local"
-	db, err := gorm.Open(mysql.Open(dsn), &gorm.Config{})
+
+	var err error
+	Driver, err = sqlx.Open("mysql", dsn)
 
 	if err != nil {
 		fmt.Fprintln(os.Stderr, err.Error())
 		os.Exit(1)
 	}
 
-	sqlDB, err := db.DB()
-	if err != nil {
+	if err := Driver.Ping(); err != nil {
 		fmt.Fprintln(os.Stderr, err.Error())
 		os.Exit(1)
 	}
-
-	if err := sqlDB.Ping(); err != nil {
-		fmt.Fprintln(os.Stderr, err.Error())
-		os.Exit(1)
-	}
-
-	return db
 }
 
-func InsertLabs(db *gorm.DB) error {
-	file, err := os.Open("lab.csv")
+func InsertLabs(path string) error {
+	file, err := os.Open(path)
 	if err != nil {
 		return err
 	}
+	defer file.Close()
 
 	csvFile := csv.NewReader(file)
 	records, err := csvFile.ReadAll()
@@ -50,33 +47,41 @@ func InsertLabs(db *gorm.DB) error {
 	}
 
 	type Prof struct {
-		ID        string
-		LabName   string
-		ProfName  string
-		ProfRoman string
+		ID        string `db:"id"`
+		LabName   string `db:"lab_name"`
+		ProfName  string `db:"prof_name"`
+		ProfRoman string `db:"prof_roman"`
 	}
 
-	for _, r := range records {
-
-		prof := Prof{
+	profs := make([]Prof, len(records))
+	for n, r := range records {
+		profs[n] = Prof{
 			ID:        uuid.New().String(),
 			LabName:   r[0],
 			ProfName:  r[1],
 			ProfRoman: r[2],
 		}
-		if err := db.Create(&prof).Error; err != nil {
-			return err
-		}
+	}
+
+	q := `
+			insert into questionnaire.professors(id, lab_name, prof_name, prof_roman)
+			values(:id,:lab_name,:prof_name,:prof_roman)
+		
+		`
+	if _, err := Driver.NamedExec(q, profs); err != nil {
+		return err
 	}
 
 	return nil
 }
 
-func InsertUsers(db *gorm.DB) error {
-	file, err := os.Open("student.csv")
+func InsertUsers(path string) error {
+	file, err := os.Open(path)
 	if err != nil {
+
 		return err
 	}
+	defer file.Close()
 
 	csvFile := csv.NewReader(file)
 	records, err := csvFile.ReadAll()
@@ -85,14 +90,16 @@ func InsertUsers(db *gorm.DB) error {
 	}
 
 	type User struct {
-		ID         string
-		StudentNum int64
-		Password   string
-		Graduate   bool
-		Entered    bool
+		ID         string `db:"id"`
+		StudentNum int64  `db:"student_num"`
+		Password   string `db:"password"`
+		Graduate   bool   `db:"graduate"`
+		Entered    bool   `db:"entered"`
 	}
 
-	for _, r := range records {
+	users := make([]User, len(records))
+
+	for n, r := range records {
 
 		num, err := strconv.ParseInt(r[0], 10, 64)
 		if err != nil {
@@ -113,17 +120,23 @@ func InsertUsers(db *gorm.DB) error {
 			return err
 		}
 
-		student := User{
+		users[n] = User{
 			ID:         uuid.NewString(),
 			StudentNum: num,
 			Password:   hashedPass,
 			Graduate:   graduate,
 			Entered:    entered,
 		}
-
-		if err := db.Create(&student).Error; err != nil {
-			return err
-		}
 	}
+
+	q := `
+			insert into questionnaire.users(id, student_num, password, graduate, entered)
+			values(:id, :student_num, :password, :graduate, :entered)
+		
+		`
+	if _, err := Driver.NamedExec(q, users); err != nil {
+		return err
+	}
+
 	return nil
 }

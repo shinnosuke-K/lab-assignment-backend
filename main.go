@@ -8,6 +8,10 @@ import (
 	"net/http"
 	"os"
 
+	"github.com/shinnosuke-K/lab-assignment-backend/interface/controller"
+
+	"github.com/shinnosuke-K/lab-assignment-backend/service"
+
 	"github.com/shinnosuke-K/lab-assignment-backend/config/db"
 )
 
@@ -105,24 +109,24 @@ func SaveHandler(w http.ResponseWriter, r *http.Request) {
 	return
 }
 
-var DB = db.Open()
-
 func InsertLabsHandler(w http.ResponseWriter, r *http.Request) {
 
-	if err := db.InsertLabs(DB); err != nil {
+	if err := db.InsertLabs("./lab.csv"); err != nil {
 		fmt.Fprintf(os.Stderr, err.Error())
 	}
 }
 
 func InsertUsersHandler(w http.ResponseWriter, r *http.Request) {
 
-	if err := db.InsertUsers(DB); err != nil {
+	if err := db.InsertUsers("student.csv"); err != nil {
 		fmt.Fprintf(os.Stderr, err.Error())
 		os.Exit(1)
 	}
 }
 
 func main() {
+
+	db.Open()
 
 	http.HandleFunc("/auth/login", LoginHandler)
 	http.HandleFunc("/auth/logout", LogoutHandler)
@@ -136,6 +140,9 @@ func main() {
 	// /auth/user/save/all
 	// /auth/user/fix/graduate
 	// /auth/user/fix/lab
+
+	c := service.NewUserViewService(db.Driver)
+	s := controller.NewUserViewController(c)
 
 	http.HandleFunc("/prof", InsertLabsHandler)
 	http.HandleFunc("/user", InsertUsersHandler)
