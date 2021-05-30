@@ -10,9 +10,9 @@ type UserViewController struct {
 	Service service.UserViewService
 }
 
-func NewUserViewController(s *service.UserViewServiceImpl) *UserViewController {
+func NewUserViewController(s service.UserViewServiceImpl) *UserViewController {
 	return &UserViewController{
-		Service: s,
+		Service: &s,
 	}
 }
 
