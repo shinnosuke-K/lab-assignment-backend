@@ -6,6 +6,6 @@ import (
 
 type UerRepository interface {
 	GetByID(db DBHandler, studentNum int) (*model.User, error)
-	UpdateGraduate(db DBHandler, graduate bool) error
-	UpdateEntered(db DBHandler) error
+	UpdateGraduate(db DBHandler, studentNum int, graduate bool) error
+	UpdateEntered(db DBHandler, studentNum int) error
 }
