@@ -3,13 +3,7 @@ updates:
   - package-ecosystem: "gomod"
     directory: "/"
     schedule:
-      interval: "daily"
-      time: "16:10"
-      timezone: "Asia/Tokyo"
-
-  - package-ecosystem: "docker"
-    directory: "/"
-    schedule:
-      interval: "daily"
-      time: "16:27"
+      interval: "weekly"
+      day: "sunday"
+      time: "08:00"
       timezone: "Asia/Tokyo"
