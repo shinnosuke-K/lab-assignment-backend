@@ -4,12 +4,12 @@ updates:
     directory: "/"
     schedule:
       interval: "daily"
-      time: "15:40"
+      time: "06:50"
       timezone: "Asia/Tokyo"
 
   - package-ecosystem: "docker"
     directory: "/"
     schedule:
       interval: "daily"
-      time: "15:40"
+      time: "06:50"
       timezone: "Asia/Tokyo"
