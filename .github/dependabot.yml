@@ -1,13 +1,15 @@
-#version: 2
-#updates:
-#  - package-ecosystem: "gomod"
-#    directory: "/"
-#    schedule:
-#      interval: "daily"
-#      timezone: "Asia/Tokyo"
-#
-#  - package-ecosystem: "docker"
-#    directory: "/"
-#    schedule:
-#      interval: "daily"
-#      timezone: "Asia/Tokyo"
+version: 2
+updates:
+  - package-ecosystem: "gomod"
+    directory: "/"
+    schedule:
+      interval: "daily"
+      time: "15:40"
+      timezone: "Asia/Tokyo"
+
+  - package-ecosystem: "docker"
+    directory: "/"
+    schedule:
+      interval: "daily"
+      time: "15:40"
+      timezone: "Asia/Tokyo"
