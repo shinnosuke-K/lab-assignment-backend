@@ -11,5 +11,5 @@ updates:
     directory: "/"
     schedule:
       interval: "daily"
-      time: "16:10"
+      time: "16:20"
       timezone: "Asia/Tokyo"
