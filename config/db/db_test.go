@@ -41,6 +41,8 @@ func TestInsertLabs(t *testing.T) {
 }
 
 func TestInsertUsers(t *testing.T) {
+	Open()
+
 	type args struct {
 		path string
 	}
