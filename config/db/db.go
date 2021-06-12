@@ -8,19 +8,19 @@ import (
 	"strconv"
 
 	_ "github.com/go-sql-driver/mysql"
-	"github.com/jmoiron/sqlx"
-
 	"github.com/google/uuid"
+	"github.com/jmoiron/sqlx"
+	"github.com/shinnosuke-K/lab-assignment-backend/domain/repository"
 )
 
-var Driver *sqlx.DB
+var Driver repository.DBConnector
 
 func Open() {
 	//dsn := "root:@tcp(lab-db:3306)/questionnaire?charset=utf8mb4&parseTime=True&loc=Local"
 	dsn := "root:@tcp(localhost:3306)/questionnaire?charset=utf8mb4&parseTime=True&loc=Local"
 
 	var err error
-	Driver, err = sqlx.Open("mysql", dsn)
+	Driver.DB, err = sqlx.Connect("mysql", dsn)
 
 	if err != nil {
 		fmt.Fprintln(os.Stderr, err.Error())
@@ -34,6 +34,7 @@ func Open() {
 }
 
 func InsertLabs(path string) error {
+
 	file, err := os.Open(path)
 	if err != nil {
 		return err
@@ -76,6 +77,7 @@ func InsertLabs(path string) error {
 }
 
 func InsertUsers(path string) error {
+
 	file, err := os.Open(path)
 	if err != nil {
 
