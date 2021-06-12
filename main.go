@@ -8,10 +8,6 @@ import (
 	"net/http"
 	"os"
 
-	"github.com/shinnosuke-K/lab-assignment-backend/interface/controller"
-
-	"github.com/shinnosuke-K/lab-assignment-backend/service"
-
 	"github.com/shinnosuke-K/lab-assignment-backend/config/db"
 )
 
@@ -140,9 +136,6 @@ func main() {
 	// /auth/user/save/all
 	// /auth/user/fix/graduate
 	// /auth/user/fix/lab
-
-	c := service.NewUserViewService(db.Driver)
-	s := controller.NewUserViewController(c)
 
 	http.HandleFunc("/prof", InsertLabsHandler)
 	http.HandleFunc("/user", InsertUsersHandler)
