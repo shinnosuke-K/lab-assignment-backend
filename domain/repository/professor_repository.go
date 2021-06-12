@@ -6,5 +6,5 @@ import (
 
 type ProfRepository interface {
 	GetAll(db DBHandler) ([]model.Professor, error)
-	GetByID(db DBHandler, id string) (model.Professor, error)
+	GetByID(db DBHandler, id string) (*model.Professor, error)
 }

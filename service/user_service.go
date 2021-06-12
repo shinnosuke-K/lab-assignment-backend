@@ -7,22 +7,18 @@ import (
 )
 
 type UserViewService interface {
-	GetByID(input UserViewInput) (UserViewOutput, Error)
-	UpdateGraduate()
-	UpdateEntered()
+	GetByID(input UserViewInput) (*UserViewOutput, error)
+	UpdateGraduate(input UserViewInput)
+	UpdateEntered(input UserViewInput)
 }
 
 type UserViewInput struct {
-	Num int
+	Num      int
+	Graduate bool
 }
 
 type UserViewOutput struct {
 	User model.User
-}
-
-type Error struct {
-	Message string
-	Status  int
 }
 
 type UserViewServiceImpl struct {
@@ -37,14 +33,16 @@ func NewUserViewService(conn repository.DBConnector) *UserViewServiceImpl {
 	}
 }
 
-func (u *UserViewServiceImpl) GetByID(input UserViewInput) (UserViewOutput, Error) {
+func (u *UserViewServiceImpl) GetByID(input UserViewInput) (*UserViewOutput, error) {
+
 	panic("implement me")
 }
 
-func (u *UserViewServiceImpl) UpdateGraduate() {
+func (u *UserViewServiceImpl) UpdateGraduate(input UserViewInput) {
+
 	panic("implement me")
 }
 
-func (u *UserViewServiceImpl) UpdateEntered() {
+func (u *UserViewServiceImpl) UpdateEntered(input UserViewInput) {
 	panic("implement me")
 }
