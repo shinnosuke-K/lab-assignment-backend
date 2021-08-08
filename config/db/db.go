@@ -54,9 +54,9 @@ func InsertLabs(path string) error {
 		ProfRoman string `db:"prof_roman"`
 	}
 
-	profs := make([]Prof, len(records))
+	profs := make([]*Prof, len(records))
 	for n, r := range records {
-		profs[n] = Prof{
+		profs[n] = &Prof{
 			ID:        uuid.New().String(),
 			LabName:   r[0],
 			ProfName:  r[1],

@@ -9,21 +9,21 @@ import (
 
 type UserStore struct{}
 
-func (*UserStore) GetByID(db repository.DBHandler, studentNum int) (*model.User, error) {
+func (*UserStore) GetByID(db repository.DBHandler, studentNum string) (*model.User, error) {
 
 	q := `
 			select * from users where student_num = ?
 		`
 
-	var user model.User
+	var user *model.User
 	if err := db.QueryRowx(q, studentNum).StructScan(&user); err != nil {
 		return nil, errors.Wrap(err, "UserStore.GetByID go error")
 	}
 
-	return &user, nil
+	return user, nil
 }
 
-func (*UserStore) UpdateGraduate(db repository.DBHandler, studentNum int, graduate bool) error {
+func (*UserStore) UpdateGraduate(db repository.DBHandler, studentNum string, graduate bool) error {
 
 	if !exitsRecord(studentNum) {
 		return errors.Errorf("no record with student_num = %d \n", studentNum)
@@ -39,7 +39,7 @@ func (*UserStore) UpdateGraduate(db repository.DBHandler, studentNum int, gradua
 	return nil
 }
 
-func (*UserStore) UpdateEntered(db repository.DBHandler, studentNum int) error {
+func (*UserStore) UpdateEntered(db repository.DBHandler, studentNum string) error {
 
 	if !exitsRecord(studentNum) {
 		return errors.Errorf("no record with student_num = %d \n", studentNum)
@@ -56,11 +56,11 @@ func (*UserStore) UpdateEntered(db repository.DBHandler, studentNum int) error {
 	return nil
 }
 
-func exitsRecord(studentNum int) bool {
+func exitsRecord(studentNum string) bool {
 	q := `
 			select * from users where student_num = ? limit 1
 		`
-	var user model.User
+	var user *model.User
 	if err := db.Driver.QueryRowx(q, studentNum).StructScan(&user); err != nil {
 		return false
 	}

@@ -5,7 +5,7 @@ import (
 )
 
 type AnswerRepository interface {
-	Store(db DBHandler, answers []model.Answer) error
-	Fix(db DBHandler, correctedAns []model.Answer) error
-	GetAnswersByID(db DBHandler, userID string) ([]model.Answer, error)
+	Store(DBHandler, []*model.Answer) error
+	Fix(DBHandler, []*model.Answer) error
+	GetAnswersByUserID(DBHandler, string) ([]*model.Answer, error)
 }
