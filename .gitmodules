@@ -1,0 +1,3 @@
+[submodule "doc"]
+	path = doc
+	url = git@github.com:shinnosuke-K/lab-assignment-doc.git
