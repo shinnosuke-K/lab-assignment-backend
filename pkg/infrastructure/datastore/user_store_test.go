@@ -3,9 +3,9 @@ package datastore
 import (
 	"testing"
 
-	"github.com/shinnosuke-K/lab-assignment-backend/config/db"
-	"github.com/shinnosuke-K/lab-assignment-backend/domain/model"
-	"github.com/shinnosuke-K/lab-assignment-backend/domain/repository"
+	"github.com/shinnosuke-K/lab-assignment-backend/pkg/adapter/db"
+	"github.com/shinnosuke-K/lab-assignment-backend/pkg/domain/model"
+	"github.com/shinnosuke-K/lab-assignment-backend/pkg/domain/repository"
 )
 
 func TestUserStore_GetByID(t *testing.T) {
@@ -14,7 +14,7 @@ func TestUserStore_GetByID(t *testing.T) {
 
 	type args struct {
 		db         repository.DBHandler
-		studentNum int
+		studentNum string
 	}
 	tests := []struct {
 		name    string
@@ -27,7 +27,7 @@ func TestUserStore_GetByID(t *testing.T) {
 			name: "存在するデータを取得",
 			args: args{
 				db:         db.Driver,
-				studentNum: 1,
+				studentNum: "1",
 			},
 			wantErr: false,
 		},
@@ -35,7 +35,7 @@ func TestUserStore_GetByID(t *testing.T) {
 			name: "存在しないデータ",
 			args: args{
 				db:         db.Driver,
-				studentNum: 0,
+				studentNum: "0",
 			},
 			wantErr: true,
 		},
