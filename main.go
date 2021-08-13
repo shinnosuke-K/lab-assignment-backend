@@ -125,8 +125,8 @@ func main() {
 	db.Open()
 	defer db.Driver.DB.Close()
 
-	http.HandleFunc("/auth/login", LoginHandler)
-	http.HandleFunc("/auth/logout", LogoutHandler)
+	http.HandleFunc("/login", LoginHandler)
+	http.HandleFunc("/logout", LogoutHandler)
 
 	//http.HandleFunc("/auth/lab/save", SaveHandler)
 	//http.HandleFunc("/auth/graduate/save", SaveHandler)
