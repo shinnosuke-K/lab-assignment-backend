@@ -13,3 +13,8 @@ services:
       MYSQL_ALLOW_EMPTY_PASSWORD: "yes"
       MYSQL_DATABASE: "questionnaire"
       TZ: "Asia/Tokyo"
+
+networks:
+  default:
+    external:
+      name: lab-assignment
