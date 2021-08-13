@@ -2,8 +2,9 @@ package controller
 
 import (
 	"encoding/json"
-	"github.com/pkg/errors"
 	"net/http"
+
+	"github.com/pkg/errors"
 )
 
 func decodeRequestBodyJSON(r *http.Request, u *UserViewRequest) error {

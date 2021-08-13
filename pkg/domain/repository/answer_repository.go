@@ -1,7 +1,7 @@
 package repository
 
 import (
-	"github.com/shinnosuke-K/lab-assignment-backend/domain/model"
+	"github.com/shinnosuke-K/lab-assignment-backend/pkg/domain/model"
 )
 
 type AnswerRepository interface {

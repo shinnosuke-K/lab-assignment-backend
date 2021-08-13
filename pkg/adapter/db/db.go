@@ -10,14 +10,14 @@ import (
 	_ "github.com/go-sql-driver/mysql"
 	"github.com/google/uuid"
 	"github.com/jmoiron/sqlx"
-	"github.com/shinnosuke-K/lab-assignment-backend/domain/repository"
+	"github.com/shinnosuke-K/lab-assignment-backend/pkg/domain/repository"
 )
 
 var Driver repository.DBConnector
 
 func Open() {
-	//dsn := "root:@tcp(lab-db:3306)/questionnaire?charset=utf8mb4&parseTime=True&loc=Local"
-	dsn := "root:@tcp(localhost:3306)/questionnaire?charset=utf8mb4&parseTime=True&loc=Local"
+	dsn := "root:@tcp(lab-db:3306)/questionnaire?charset=utf8mb4&parseTime=True&loc=Local"
+	//dsn := "root:@tcp(localhost:3306)/questionnaire?charset=utf8mb4&parseTime=True&loc=Local"
 
 	var err error
 	Driver.DB, err = sqlx.Connect("mysql", dsn)
@@ -28,6 +28,7 @@ func Open() {
 	}
 
 	if err := Driver.Ping(); err != nil {
+		Driver.DB.Close()
 		fmt.Fprintln(os.Stderr, err.Error())
 		os.Exit(1)
 	}

@@ -1,9 +1,9 @@
 package service
 
 import (
-	"github.com/shinnosuke-K/lab-assignment-backend/domain/model"
-	"github.com/shinnosuke-K/lab-assignment-backend/domain/repository"
-	"github.com/shinnosuke-K/lab-assignment-backend/infrastructure/datastore"
+	"github.com/shinnosuke-K/lab-assignment-backend/pkg/domain/model"
+	"github.com/shinnosuke-K/lab-assignment-backend/pkg/domain/repository"
+	"github.com/shinnosuke-K/lab-assignment-backend/pkg/infrastructure/datastore"
 )
 
 type AnswerViewService interface {

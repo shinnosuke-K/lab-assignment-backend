@@ -5,8 +5,8 @@ import (
 	"errors"
 	"net/http"
 
-	"github.com/shinnosuke-K/lab-assignment-backend/interface/presenter"
-	"github.com/shinnosuke-K/lab-assignment-backend/service"
+	"github.com/shinnosuke-K/lab-assignment-backend/pkg/interface/presenter"
+	"github.com/shinnosuke-K/lab-assignment-backend/pkg/service"
 )
 
 type UserViewController struct {

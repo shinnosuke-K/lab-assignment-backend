@@ -2,8 +2,8 @@ package datastore
 
 import (
 	"github.com/pkg/errors"
-	"github.com/shinnosuke-K/lab-assignment-backend/domain/model"
-	"github.com/shinnosuke-K/lab-assignment-backend/domain/repository"
+	"github.com/shinnosuke-K/lab-assignment-backend/pkg/domain/model"
+	"github.com/shinnosuke-K/lab-assignment-backend/pkg/domain/repository"
 )
 
 type ProfStore struct{}

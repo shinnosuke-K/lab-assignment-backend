@@ -1,8 +1,8 @@
 package presenter
 
 import (
-	"github.com/shinnosuke-K/lab-assignment-backend/domain/model"
-	"github.com/shinnosuke-K/lab-assignment-backend/interface/controller"
+	"github.com/shinnosuke-K/lab-assignment-backend/pkg/domain/model"
+	"github.com/shinnosuke-K/lab-assignment-backend/pkg/interface/controller"
 )
 
 func UserOKResponse(user *model.User, professors []*model.Professor, answers []*model.Answer) controller.UserViewResponse {
